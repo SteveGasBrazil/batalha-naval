@@ -1,0 +1,68 @@
+#include <stdio.h>
+
+#define ROWS 8   // Altura do tabuleiro (eixo Y: 0..ROWS-1)
+#define COLS 8   // Largura do tabuleiro (eixo X: 0..COLS-1)
+
+/*
+  Convenção de coordenadas:
+  - A matriz é board[Y][X] (linha, coluna).
+  - Imprimimos coordenadas como (X, Y).
+  - 0 = vazio, 1 = navio vertical, 2 = navio horizontal.
+*/
+
+int main(void) {
+    int board[ROWS][COLS] = {0};
+
+    // ---------------- Configuração editável ----------------
+    // Navio VERTICAL
+    int vert_startX = 2;   // X inicial
+    int vert_startY = 1;   // Y inicial
+    int vert_len    = 3;   // tamanho
+
+    // Navio HORIZONTAL
+    int horiz_startX = 0;  // X inicial
+    int horiz_startY = 5;  // Y inicial
+    int horiz_len    = 4;  // tamanho
+    // ------------------------------------------------------
+
+    // Checagem simples de limites
+    if (vert_startX < 0 || vert_startX >= COLS ||
+        vert_startY < 0 || vert_startY + vert_len > ROWS) {
+        printf("Erro: navio vertical fora dos limites.\n");
+        return 1;
+    }
+    if (horiz_startY < 0 || horiz_startY >= ROWS ||
+        horiz_startX < 0 || horiz_startX + horiz_len > COLS) {
+        printf("Erro: navio horizontal fora dos limites.\n");
+        return 1;
+    }
+
+    // Posiciona e imprime coordenadas do navio VERTICAL
+    printf("Navio VERTICAL (tam %d) nas coordenadas (X, Y):\n", vert_len);
+    for (int i = 0; i < vert_len; i++) {
+        int x = vert_startX;
+        int y = vert_startY + i;
+        board[y][x] = 1;
+        printf("  (%d, %d)\n", x, y);
+    }
+
+    // Posiciona e imprime coordenadas do navio HORIZONTAL
+    printf("\nNavio HORIZONTAL (tam %d) nas coordenadas (X, Y):\n", horiz_len);
+    for (int j = 0; j < horiz_len; j++) {
+        int x = horiz_startX + j;
+        int y = horiz_startY;
+        board[y][x] = 2;
+        printf("  (%d, %d)\n", x, y);
+    }
+
+    // (Opcional) Exibe o tabuleiro
+    printf("\nTabuleiro (Y linhas x X colunas):\n");
+    for (int y = 0; y < ROWS; y++) {
+        for (int x = 0; x < COLS; x++) {
+            printf("%d ", board[y][x]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
